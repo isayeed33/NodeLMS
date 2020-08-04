@@ -1,3 +1,9 @@
+Built with:
+
+    Node.js, Express.js, MongoDB, Mongoose and Handlebars.
+    Passport.js for authorization and authentication.
+    Bcrypt for encryption.
+
 ### `npm install`
 
 Install all the dependencies and set up the mongodb url.
