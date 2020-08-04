@@ -20,4 +20,4 @@ The Instructor can register for the Classes.After registering for the class, the
 
 The Student can register for the Classes.After registering for the class, the student can view the lessons.The Student can logout of the account.
 
-https://github.com/isayeed33/NodeLMS/issues/3#issue-672592448
+![2020-08-04_13-28-16](https://user-images.githubusercontent.com/61356974/89268917-d4909c80-d656-11ea-9479-e114cdbd01e2.png)
