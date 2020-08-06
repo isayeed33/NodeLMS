@@ -12,8 +12,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local'),Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/elearn');
-var db = mongoose.connection;
+// mongoose.connect('mongodb://localhost/elearn');
+// var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/elearn',{useNewUrlParser:true,useUnifiedTopology:true},
+    err => {
+        if (!err)
+            console.log('Mongodb connection succeeded.')
+        else
+            console.log('Error while connecting MongoDB : ' + JSON.stringify(err, undefined, 2))
+    })
 async = require('async');
 
 var routes = require('./routes/index');
