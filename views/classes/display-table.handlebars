@@ -1,0 +1,37 @@
+{{#if message}}
+    {{message}}
+{{/if}}
+<table border="1">
+
+        <tr>
+
+                <th>Title</th>
+                <th>Description</th>
+                <th>Instructor</th>
+                 <th>Action</th>
+        </tr>
+ 
+       Record Found {{ classes.length  }}
+        {{#each classes}}
+        <tr>
+
+                <td>{{title}}</td>
+                <td>{{description}}</td>
+                <td>{{instructor}}</td>
+                <td>
+                        <a href='edit/{{_id}}'>Edit</a> |    
+                 
+                        <a href='delete/{{_id}}'>Delete</a>
+                </td>
+
+        </tr>
+
+        {{else}}
+
+        
+                 No Record Found
+        
+        {{/each}}
+</table>
+
+ 

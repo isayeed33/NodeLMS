@@ -18,7 +18,7 @@ var ClassSchema = mongoose.Schema({
 	}]
 });
 
-var Class = module.exports = mongoose.model('Class', ClassSchema);
+var Class = module.exports = mongoose.model('class', ClassSchema)
 
 // Fetch All Classes
 module.exports.getClasses = function(callback, limit){

@@ -1,0 +1,41 @@
+{{#if message}} {{message}} {{/if}}
+
+ 
+<form method="post">
+
+    <table>
+
+        <tr>
+            <td>Class Title : </td>
+            <td>
+                <input type="text" placeholder="Class Title" name="title" value="{{classDetail.title}}" required> </td>
+        </tr>
+        <tr>
+            <td> Description :</td>
+            <td>
+                <input type="text" placeholder="Description" name="description" value="{{classDetail.description}}" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Instructor :</td>
+            <td>
+                <input type="text" placeholder="Instructor" name="instructor" value="{{classDetail.instructor}}" required>
+            </td>
+        </tr>
+
+        <tr>
+
+            <td>
+                <input type="submit">
+                <input type="button" value="Display" onclick="window.location='display';">
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+</form>
+
+ 
