@@ -5,6 +5,7 @@
 	<li><a href="/users/logout">Logout</a></li>
 	</ul>
 {{else}}
+<<<<<<< HEAD
 	<h4>Student OR Instructor, Please Login Here</h4>
 		<form method="post" action="/users/login">
 			<label> Username: </label>
@@ -14,3 +15,14 @@
 			<input type="submit" class="button" value="Login">
 		</form>
 {{/if}}
+=======
+<h4>Student OR Instructor, Please Login Here</h4>
+	<form method="post" action="/users/login">
+		<label> Username: </label>
+		<input type="text" name="username">
+		<label> Password: </label>
+		<input type="password" name="password">
+		<input type="submit" class="button" value="Login">
+	</form>
+{{/if}}
+>>>>>>> ae76a52fba1c45655fa0acea1f911b60c3915340
