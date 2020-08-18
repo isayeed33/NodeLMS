@@ -2,11 +2,11 @@
 
 {{#each classes}}
 	<div class="block">
-		<h3>{{title}}</h3>
+		<p>Subject: {{title}}</p>
 		<p>
 			Description: {{description}}
 		</p>
-		<p>Instructor: <strong>{{instructor}}</strong></p>
+		<p>Instructor: {{instructor}}</p>
 		<a class="button" href="/classes/{{_id}}/details">Class Details</a>
 	</div>
 {{/each}}

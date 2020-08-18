@@ -5,7 +5,7 @@ var Class = require('../models/class');
 var Response = require('../response');
 
 
-//List Table Data
+//List Class Table Data
 router.get('/display', function(req, res) {
     Class.find(function(err, classes) {
         if (err) {
@@ -17,12 +17,12 @@ router.get('/display', function(req, res) {
     });
 });
 
-//Display Form 
+//Display Classes 
 router.get('/add', function(req, res, next) {
     res.render('classes/add-form');
 });
 
-/* POST Data. */
+/* POST Class. */
 router.post('/add', function(req, res, next) {
     console.log(req.body);
 
@@ -34,16 +34,14 @@ router.post('/add', function(req, res, next) {
     var data = Class(mybodydata);
     data.save(function(err) {
         if (err) {
-
             res.render('classes/add-form', { message: 'Class not added successfully!' });
         } else {
-
             res.render('classes/add-form', { message: 'Class Added successfully!' });
         }
     })
 });
 
-/* DELETE User BY ID */
+/* DELETE Class BY ID */
 router.get('/delete/:id', function(req, res) {
     Class.findByIdAndRemove(req.params.id, function(err, project) {
         if (err) {
@@ -59,7 +57,7 @@ router.get('/delete/:id', function(req, res) {
 });
 
 
-/* GET SINGLE User BY ID */
+/* GET SINGLE Class BY ID */
 router.get('/edit/:id', function(req, res) {
     console.log(req.params.id);
     Class.findById(req.params.id, function(err, classes) {
@@ -67,98 +65,93 @@ router.get('/edit/:id', function(req, res) {
             console.log(err);
         } else {
             console.log(classes);
-
             res.render('classes/edit-form', { classDetail: classes });
         }
     });
 });
 
-/* UPDATE User */
+/* UPDATE Class */
 router.post('/edit/:id', function(req, res) {
     Class.findByIdAndUpdate(req.params.id, req.body, function(err) {
         if (err) {
             req.flash('error_msg', 'Something went wrong! User could not updated.');
             res.redirect('edit/' + req.params.id);
         } else {
-            req.flash('success_msg', 'Record Updated');
+            req.flash('success_msg', 'Class Updated');
             res.redirect('../display');
         }
     });
 });
 
 
-router.get('/get-all-users-api', function(req, res, next) {
-    Class.find({}, function(err, posts) {
-        if (err) {
-            Response.errorResponse(err, res);
-        } else {
-            Response.successResponse('User Listing!', res, posts);
-        }
-    });
+// router.get('/get-all-users-api', function(req, res, next) {
+//     Class.find({}, function(err, posts) {
+//         if (err) {
+//             Response.errorResponse(err, res);
+//         } else {
+//             Response.successResponse('User Listing!', res, posts);
+//         }
+//     });
 
-});
+// });
 
-router.post('/add-users-api', function(req, res, next) {
-    console.log(req.body);
+// router.post('/add-users-api', function(req, res, next) {
+//     console.log(req.body);
 
-    const mybodydata = {
-        title: req.body.title,
-        description: req.body.description,
-        instructor: req.body.instructor
-    }
-    var data = Class(mybodydata);
-    //var data = Class(req.body);
-    data.save(function(err) {
-        if (err) {
-            Response.errorResponse(err, res);
+//     const mybodydata = {
+//         title: req.body.title,
+//         description: req.body.description,
+//         instructor: req.body.instructor
+//     }
+//     var data = Class(mybodydata);
+//     //var data = Class(req.body);
+//     data.save(function(err) {
+//         if (err) {
+//             Response.errorResponse(err, res);
            
-        } else {
+//         } else {
 
-            Response.successResponse('Class Added!', res, {});
-        }
-    })
-});
-
-
-/* GET SINGLE POST BY ID */
-router.get('/get-users-details-api/:id', function(req, res, next) {
-    Class.findById(req.params.id, function (err, post) {
-    if(err){
-      Response.errorResponse(err,res);
-  }else{
-      Response.successResponse('Class Detail!',res,post);
-  }
-  });
-});
-
-/* DELETE POST BY ID */
-router.delete('/delete-users-api', function(req, res, next) {
-    Class.findByIdAndRemove(req.body._id, function (err, post) {
-    if (err) {
-      Response.errorResponse(err,res);
-    } else {
-      Response.successResponse('Class deleted!',res,{});
-    }
-  });
-});
-
-/* UPDATE POST */
-router.post('/update-users-api', function(req, res, next) {
-  console.log(req.body._id);
-  Class.findByIdAndUpdate(req.body._id, req.body, function (err, post) {
-  if (err) {
-    Response.errorResponse(err,res);
-  } else {
-    Response.successResponse('Class updated!',res,{});
-  }
-});
-});
-
-module.exports = router;
+//             Response.successResponse('Class Added!', res, {});
+//         }
+//     })
+// });
 
 
+// /* GET SINGLE POST BY ID */
+// router.get('/get-users-details-api/:id', function(req, res, next) {
+//     Class.findById(req.params.id, function (err, post) {
+//     if(err){
+//       Response.errorResponse(err,res);
+//   }else{
+//       Response.successResponse('Class Detail!',res,post);
+//   }
+//   });
+// });
 
+// /* DELETE POST BY ID */
+// router.delete('/delete-users-api', function(req, res, next) {
+//     Class.findByIdAndRemove(req.body._id, function (err, post) {
+//     if (err) {
+//       Response.errorResponse(err,res);
+//     } else {
+//       Response.successResponse('Class deleted!',res,{});
+//     }
+//   });
+// });
 
+// /* UPDATE POST */
+// router.post('/update-users-api', function(req, res, next) {
+//   console.log(req.body._id);
+//   Class.findByIdAndUpdate(req.body._id, req.body, function (err, post) {
+//   if (err) {
+//     Response.errorResponse(err,res);
+//   } else {
+//     Response.successResponse('Class updated!',res,{});
+//   }
+// });
+// });
+
+// module.exports = router;
 
 
 //Classes Page

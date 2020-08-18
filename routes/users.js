@@ -18,17 +18,7 @@ router.get('/register', function(req, res, next) {
 // Register User
 router.post('/register', function(req, res, next) {
  	// Get Form Values
-	var first_name     	= req.body.first_name;
-	var last_name     	= req.body.last_name;
-	var street_address  = req.body.street_address;
-	var city     		= req.body.city;
-	var state    		= req.body.state;
-	var zip     		= req.body.zip;
-	var email    		= req.body.email;
-	var username 		= req.body.username;
-	var password 		= req.body.password;
-	var password2 		= req.body.password2;
-	var type            = req.body.type;
+	var {first_name, last_name, street_address, city, state, zip, email, username, password, password2, type} = req.body
 
 	// Form Validation
 	req.checkBody('first_name', 'First name field is required').notEmpty();
@@ -38,7 +28,6 @@ router.post('/register', function(req, res, next) {
 	req.checkBody('username', 'Username field is required').notEmpty();
 	req.checkBody('password', 'Password field is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
 	errors = req.validationErrors();
 
 	if(errors){
@@ -46,54 +35,74 @@ router.post('/register', function(req, res, next) {
 			errors: errors
 		});
 	} else {
-		var newUser = new User({
-			email: email,
-			username:username,
-			password: password,
-			type: type
+		User.findOne({email: email})
+        .then(user => {
+            if(user){
+				errors.push('User Exists');
+                 res.render('users/register', {
+                     errors
+                    //  name,
+                    //  email,
+                    //  password,
+                    //  password2
+				 });	 
+			} 
+			else
+			 {
+                const newUser = new User({
+                    username,
+                    email,
+                    password,
+                    type
+				});
+
+				if(type == 'student'){
+					console.log('Registering Student...');
+		
+					var newStudent = new Student({
+						first_name: first_name,
+						last_name: last_name,
+						address: [{
+							street_address: street_address,
+							city: city,
+							state: state,
+							zip: zip
+						}],
+						email: email,
+						username:username
+					});
+		
+		
+					User.saveStudent(newUser, newStudent, function(err, user){
+						console.log('Student created');
+						req.flash('success_msg', 'Student '+user+' Added');
+					});
+				} else {
+					console.log('Registering Instructor...');
+					var newInstructor = new Instructor({
+						first_name: first_name,
+						last_name: last_name,
+						address: [{
+							street_address: street_address,
+							city: city,
+							state: state,
+							zip: zip
+						}],
+						email: email,
+						username:username
+					});
+		
+					User.saveInstructor(newUser, newInstructor, function(err, user){
+						console.log('Instructor created');
+						req.flash('success_msg', 'Instructor '+user+' Added');
+					});
+				}
+					
+			}
+
 		});
-
-		if(type == 'student'){
-			console.log('Registering Student...');
-
-			var newStudent = new Student({
-				first_name: first_name,
-				last_name: last_name,
-				address: [{
-					street_address: street_address,
-					city: city,
-					state: state,
-					zip: zip
-				}],
-				email: email,
-				username:username
-			});
-
-			User.saveStudent(newUser, newStudent, function(err, user){
-				console.log('Student created');
-			});
-		} else {
-			console.log('Registering Instructor...');
-			var newInstructor = new Instructor({
-				first_name: first_name,
-				last_name: last_name,
-				address: [{
-					street_address: street_address,
-					city: city,
-					state: state,
-					zip: zip
-				}],
-				email: email,
-				username:username
-			});
-
-			User.saveInstructor(newUser, newInstructor, function(err, user){
-				console.log('Instructor created');
-			});
-		}
-
-		req.flash('success_msg', 'User Added');
-		res.redirect('/');
+			// req.flash('success_msg', 'User Added');
+			res.redirect('/');
 	}
 });
 
@@ -143,7 +152,5 @@ router.get('/logout', function(req, res){
 	req.flash('success_msg', "You have logged out");
   	res.redirect('/');
 });
-
-
 
 module.exports = router;
